@@ -1,0 +1,29 @@
+.caja_barra_superior{
+
+    position: relative;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    background-color: rgb(202, 184, 123);
+    display: flex;
+    flex-direction: row;
+    font-family: calibri;
+    margin-bottom: 0px;
+
+}
+
+.columnas_barra_superior{
+
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+.columnas_barra_superior:hover {
+
+    background-color: rgb(167, 146, 79);
+
+}

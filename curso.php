@@ -281,9 +281,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    
+    <title>Colmena ECBC</title>
 
     <link rel="stylesheet" href="estilos.css">
+
+    <link rel="icon" href="imagenes/emoji.svg" type="image/svg+xml">
 
     <style>
 
@@ -379,7 +382,7 @@
             flex:1
         }
 
-        #tabla_estudiantes_1, #tabla_estudiantes_2, #tabla_estudiantes_3, #tabla_docentes {
+        #tabla_estudiantes_1, #tabla_estudiantes_2, #tabla_estudiantes_3, #tabla_docentes, #tabla_auxiliares {
             border: 1px solid black;
             border-collapse: collapse;
             margin-bottom: 10px;
@@ -403,7 +406,7 @@
             display: <?php if($foco == "1c") {echo("table");} else {echo("none");}?>;;
         }        
 
-        #tabla_docentes {
+        #tabla_docentes, #tabla_auxiliares {
             width: 1200px;
         }
 
@@ -1142,7 +1145,13 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>                
+                </table>
+
+                <table id="tabla_auxiliares">
+                    <tr>
+                        <td><?php echo($docente["auxiliar"]) ?></td>
+                    </tr>                    
+                </table>
 
             </div>
 

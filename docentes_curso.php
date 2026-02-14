@@ -120,4 +120,52 @@
 
     }
 
+    //-------- auxiliar docente
+
+    if ($anio == 1) {
+
+        $instruccion = "SELECT * FROM planta_funcional WHERE ROL = 1 AND FUNCION = 5 AND CURSO = '" . $curso . "'";
+
+    } else {
+
+        $instruccion = "SELECT * FROM planta_funcional WHERE ROL = 1 AND FUNCION = 1 AND CURSO = '" . $curso . "'";
+
+    }
+
+    $instruccion = $instruccion . " ORDER BY DESIGNACION DESC;";
+
+    $resultado = mysqli_query($conexion, $instruccion);
+
+    $registro = mysqli_fetch_assoc($resultado);
+
+    $registro_anterior = $registro;
+
+    $primero = true;
+
+    while ($registro) {
+
+        if ($primero) {
+
+            $docente["auxiliar"] = $registro["DOCENTES"];
+
+            $primero = false;
+
+        } else {
+
+            if ($registro["DESIGNACION"] <> 0) {
+
+                $docente["auxiliar"] = $registro["DOCENTES"] . " \ " . $docente["auxiliar"];
+
+            }
+
+            $registro_anterior = $registro;
+
+        }
+
+        $registro = mysqli_fetch_assoc($resultado);
+
+    }
+
+    //--------
+
 ?>

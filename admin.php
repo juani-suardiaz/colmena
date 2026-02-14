@@ -11,9 +11,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        
+        <title>Colmena ECBC</title>
 
         <link rel="stylesheet" href="estilos.css">
+
+        <link rel="icon" href="imagenes/emoji.svg" type="image/svg+xml">
 
         <style>
 

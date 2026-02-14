@@ -8,7 +8,11 @@
 
     <head>
 
+        <title>Colmena ECBC</title>
+
         <link rel="stylesheet" href="estilos.css">
+
+        <link rel="icon" href="imagenes/emoji.svg" type="image/svg+xml">
 
         <style>
 

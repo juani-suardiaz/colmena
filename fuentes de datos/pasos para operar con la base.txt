@@ -1,0 +1,22 @@
+-- CUANDO MODIFICO LA ESTRUCTURA EN CASA
+
+1º Se crea la nueva consulta en trafalgar;
+2º Se exportan los datos de la nueva consulta al archivo .csv correspondiente;
+3º Se crea - a mano - la nueva tabla en Colmena;
+4º Se agrega el bloque de código correspondiente a esa nueva tabla en el archivo importar.sql;
+5º Se hace correr el archivo importar.bat para que se agreguen los datos a la nueva tabla;
+6º Se crear el archivo de back-up de la base de datos desde el phpmyadmin y se lo guarda en la carpeta BACK-UP BASE DE DATOS dentro de FUENTES DE DATOS;
+7º Se suben al DRIVE tanto el archivo .csv como el archivo de back-up de la base de datos;
+8º Se hace COMMIT y PUSH a GitHub para que se suban las actualizaciones del proyecto (entre ellas los cambios al archivo importar.sql);
+En el trabajo:
+9º Se hace PULL REQUEST en git para que se descarguen las actualizaciones al proyecto (ente ellas la del archivo importar.sql);
+10º Se descargan el archivo .csv y el archivo de back-up a las carpetas correspondientes dentro del proyecto;
+11º Se hace correr el archivo resturar.bat para que borre, cree y cargue los datos de back-up a la base de datos.
+
+Para los datos de GUARANÍ 3 se arranca desde el 2º paso
+
+-- CUANDO ACTUALIZO DATOS EN EL TRABAJO
+
+1º Se actualizan los datos en el sistema origen que corresponda (Trafalgar ó GUARANÍ 3);
+2º Se exportan los datos a los archivos .csv correspondientes (en GUARANÍ 3 hay que primero hacer la limpieza con POWEQUERY de EXCEL);
+3º Se ejecuta el archivo importar.bat.

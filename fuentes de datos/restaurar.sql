@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS colmena;
+CREATE DATABASE colmena;

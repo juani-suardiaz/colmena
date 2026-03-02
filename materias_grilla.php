@@ -158,13 +158,21 @@
 
                 if ($hora == 1 && $veintena == 1) {
 
-                    $materia_anterior = $materia[$dia . "_" . $hora . "_" . $veintena];
+                    if (isset($materia[$dia . "_" . $hora . "_" . $veintena])) {
 
-                    $info_bloque[$dia . "_" . $hora . "_" . $veintena] = "bloque_" . $dia . "_" . $bloque . " " . $paridad;
+                        $materia_anterior = $materia[$dia . "_" . $hora . "_" . $veintena];
 
-                    $existe_anterior = true;
+                        $info_bloque[$dia . "_" . $hora . "_" . $veintena] = "bloque_" . $dia . "_" . $bloque . " " . $paridad;
 
-                    continue;
+                        $existe_anterior = true;
+
+                        continue;
+
+                    } else {
+
+                        $existe_anterior = false;
+
+                    }
 
                 } else {
 

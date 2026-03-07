@@ -72,6 +72,17 @@
 
     //---
 
+    if ($anio == 2) {
+
+        $materia["5_5_1"] = "Taller Optativo";
+        $materia["5_5_2"] = "Taller Optativo";
+        $materia["5_5_3"] = "Taller Optativo";
+        $materia["5_6_1"] = "Taller Optativo";
+
+    }
+
+    //---
+
     $salida_veintena = [
         // turno mañana
         "1-1-1" => "07:50",

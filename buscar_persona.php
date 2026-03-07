@@ -333,7 +333,7 @@
 
                     }
 
-                    $instruccion = $instruccion . " ORDER BY apellido;";
+                    $instruccion = $instruccion . " ORDER BY apellido, nombre, dni;";
 
                     // echo $instruccion;
 

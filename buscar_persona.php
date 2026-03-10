@@ -133,34 +133,42 @@
 
             }
 
-            borrado = false
+            function borrar_formulario () {
 
-            function resetear_campos(elemento) {
-
-                if (borrado == false) {
-
-                    switch (elemento) {
-
-                        case 1:
-                            document.getElementById("campo_nombre").value = "";
-                            document.getElementById("campo_dni").value = "";
-                            break;
-                        case 2:
-                            document.getElementById("campo_apellido").value = "";
-                            document.getElementById("campo_dni").value = "";
-                            break;
-                        case 3:
-                            document.getElementById("campo_apellido").value = "";
-                            document.getElementById("campo_nombre").value = "";
-                            break;
-
-                    }
-
-                    borrado = true
-
-                }
+                document.getElementById("campo_apellido").value = ""
+                document.getElementById("campo_nombre").value = ""
+                document.getElementById("campo_dni").value = ""
 
             }
+
+            // borrado = false
+
+            // function resetear_campos(elemento) {
+
+            //     if (borrado == false) {
+
+            //         switch (elemento) {
+
+            //             case 1:
+            //                 document.getElementById("campo_nombre").value = "";
+            //                 document.getElementById("campo_dni").value = "";
+            //                 break;
+            //             case 2:
+            //                 document.getElementById("campo_apellido").value = "";
+            //                 document.getElementById("campo_dni").value = "";
+            //                 break;
+            //             case 3:
+            //                 document.getElementById("campo_apellido").value = "";
+            //                 document.getElementById("campo_nombre").value = "";
+            //                 break;
+
+            //         }
+
+            //         borrado = true
+
+            //     }
+
+            // }
 
             function testear_tecla (evento) {
 
@@ -244,22 +252,23 @@
 
                     <div style="flex: 1; display: flex; flex-direction: column;">
                         <label for="campo_apellido" style="flex: 1;">APELLIDO</label>
-                        <input type="text" id="campo_apellido" name="apellido" style="flex: 1; margin-right: 30px;" value="<?php echo($valor_apellido);?>" oninput="resetear_campos(1);">
+                        <input type="text" id="campo_apellido" name="apellido" style="flex: 1; margin-right: 30px;" value="<?php echo($valor_apellido);?>">
                     </div>
 
                     <div style="flex: 1; display: flex; flex-direction: column;">
                         <label for="campo_nombre" style="flex: 1;">NOMBRE</label>
-                        <input type="text" id="campo_nombre" name="nombre" style="flex: 1; margin-right: 30px;" value="<?php echo($valor_nombre);?>" oninput="resetear_campos(2);">
+                        <input type="text" id="campo_nombre" name="nombre" style="flex: 1; margin-right: 30px;" value="<?php echo($valor_nombre);?>">
                     </div>
                     
                     <div style="flex: 1; display: flex; flex-direction: column;">
                         <label for="campo_dni" style="flex: 1;">DNI</label>
-                        <input type="text" id="campo_dni" name="dni" style="flex: 1; margin-right: 30px;" value="<?php echo($valor_dni);?>"  oninput="resetear_campos(3);">
+                        <input type="text" id="campo_dni" name="dni" style="flex: 1; margin-right: 30px;" value="<?php echo($valor_dni);?>">
                     </div>
                     
                     <div style="flex: 1;">
                         <div style="color: white">&nbsp;</div>
                         <input type="button" value="BUSCAR" onclick="enviar_formulario();">
+                        <input type="button" value="BORRAR" onclick="borrar_formulario();">
                     </div>                  
 
                 </div>
@@ -313,7 +322,7 @@
 
                         }
 
-                        $instruccion = $instruccion . " apellido LIKE '%" . $apellido . "%'";
+                        $instruccion = $instruccion . " apellido LIKE '" . $apellido . "%'";
 
                     }
 
@@ -329,7 +338,7 @@
 
                         }
 
-                        $instruccion = $instruccion . " nombre LIKE '%" . $nombre . "%'";
+                        $instruccion = $instruccion . " nombre LIKE '" . $nombre . "%'";
 
                     }
 

@@ -50,6 +50,16 @@ FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
 
+-- tabla: mail_list_alfa
+
+TRUNCATE TABLE mail_list_alfa;
+LOAD DATA INFILE 'C:/xampp/htdocs/colmena/fuentes de datos/docentes/colmena_mail_list_alfa.csv'
+REPLACE INTO TABLE mail_list_alfa
+CHARACTER SET latin1
+FIELDS TERMINATED BY ';'
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
 -- //////////////////////////////////////////////////////////// ESTUDIANTES ////////////////////////////////////////////////////////////
 
 DELETE FROM persona WHERE actuacion = 1;

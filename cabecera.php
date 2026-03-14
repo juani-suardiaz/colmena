@@ -40,7 +40,7 @@ function imprimir_cabecera ($indice) {
         <div class="columnas_barra_superior" <?php echo($estilo_2)?> onclick="window.location.href = 'buscar_persona.php'">FICHA PERSONAL</div>
         <div class="columnas_barra_superior" <?php echo($estilo_3)?> onclick="window.location.href = 'curso.php'">CURSO</div>
         <div class="columnas_barra_superior" <?php echo($estilo_4)?> onclick="window.location.href = 'planta_funcional.php'">PLANTA FUNCIONAL</div>
-        <div class="columnas_barra_superior" <?php echo($estilo_5)?> onclick="window.location.href = 'mail_list.php'">MAIL LIST</div>
+        <div class="columnas_barra_superior" <?php echo($estilo_5)?> onclick="window.location.href = 'mail_list.php'">LISTA DE CORREOS</div>
         <div class="columnas_barra_superior" <?php echo($estilo_6)?> onclick="window.location.href = 'admin.php'">ADMIN</div>
 
     </div>

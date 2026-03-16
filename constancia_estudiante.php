@@ -23,7 +23,7 @@
     $pdf->AddPage();
 
     $ancho_util = $pdf->GetPageWidth() - $pdf->getx() * 2;
-    $pdf->Image('imagenes/membrete_2025.png',$pdf->getx(),$pdf->gety() / 2,$ancho_util,0);
+    $pdf->Image('imagenes/membrete_2026.png',$pdf->getx(),$pdf->gety() / 2,$ancho_util,0);
     $pdf->Ln(40);    
 
     $pdf->SetFont('Arial','BU',25);

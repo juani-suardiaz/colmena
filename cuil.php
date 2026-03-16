@@ -88,13 +88,13 @@
                         
                             // hombre
                             
-                            return "23-" . substr($dni_texto_2, 4, strlen($dni_texto_2) - 3) . "-9";
+                            return "23-" . substr($dni_texto_2, 3, strlen($dni_texto_2) - 3) . "-9";
                         
                         } else {
                         
                             // mujer
                             
-                            return "23-" . substr($dni_texto_2, 4, strlen($dni_texto_2) - 3) . "-4";
+                            return "23-" . substr($dni_texto_2, 3, strlen($dni_texto_2) - 3) . "-4";
                         
                         }
                     

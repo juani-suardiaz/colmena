@@ -300,11 +300,20 @@
 
                     $instruccion = "SELECT * FROM persona WHERE";
 
+                    $tipos = "";
+
+                    $control = 0;
+                    
                     $primero = true;
 
                     if ($dni != "") {
 
-                        $instruccion = $instruccion . " dni = " . $dni;
+                        //$instruccion = $instruccion . " dni = " . $dni;
+                        $instruccion = $instruccion . " dni = ?";
+
+                        $tipos .= "i";
+
+                        $control += 1;
 
                         $primero = false;
 
@@ -322,7 +331,12 @@
 
                         }
 
-                        $instruccion = $instruccion . " apellido LIKE '" . $apellido . "%'";
+                        //$instruccion = $instruccion . " apellido LIKE '" . $apellido . "%'";
+                        $instruccion = $instruccion . " apellido LIKE CONCAT(?, '%')";
+
+                        $tipos .= "s";
+
+                        $control += 10;
 
                     }
 
@@ -338,7 +352,12 @@
 
                         }
 
-                        $instruccion = $instruccion . " nombre LIKE '" . $nombre . "%'";
+                        //$instruccion = $instruccion . " nombre LIKE '" . $nombre . "%'";
+                        $instruccion = $instruccion . " nombre LIKE CONCAT(?, '%')";
+
+                        $tipos .= "s";
+
+                        $control += 20;
 
                     }
 
@@ -346,7 +365,39 @@
 
                     // echo $instruccion;
 
-                    $resultado = mysqli_query($conexion, $instruccion);
+                    //$resultado = mysqli_query($conexion, $instruccion);
+
+                    $stmt = mysqli_prepare($conexion, $instruccion);
+
+                    switch ($control) {
+
+                        case 1:
+                            mysqli_stmt_bind_param($stmt, $tipos, $dni);
+                            break;
+                        case 10:
+                            mysqli_stmt_bind_param($stmt, $tipos, $apellido);
+                            break;
+                        case 20:
+                            mysqli_stmt_bind_param($stmt, $tipos, $nombre);
+                            break;
+                        case 11:
+                            mysqli_stmt_bind_param($stmt, $tipos, $dni, $apellido);
+                            break;
+                        case 21:
+                            mysqli_stmt_bind_param($stmt, $tipos, $dni, $nombre);
+                            break;
+                        case 30:
+                            mysqli_stmt_bind_param($stmt, $tipos, $apellido, $nombre);
+                            break;
+                        case 31:
+                            mysqli_stmt_bind_param($stmt, $tipos, $dni, $apellido, $nombre);
+                            break;
+
+                    }
+
+                    mysqli_stmt_execute($stmt);
+
+                    $resultado = mysqli_stmt_get_result($stmt);
 
                     $persona = mysqli_fetch_assoc($resultado);
 
@@ -390,7 +441,16 @@
                             <input type="hidden" name="nombre_busqueda" value="<?php echo($nombre);?>">
                             <input type="hidden" name="dni_busqueda" value="<?php echo($dni);?>">
 
-                        </form>        
+                        </form>
+
+            <!-- LIBERAMOS MEMORIA DE LA CONSULTA PREPARADA -->
+
+            <?php 
+            
+                mysqli_stmt_free_result($stmt);
+                mysqli_stmt_close($stmt);
+            
+            ?>
 
             <!-- CERRAMOS LA CONEXIÓN -->
 

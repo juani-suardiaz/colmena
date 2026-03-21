@@ -12,6 +12,30 @@
 
 ?>
 
+<!-- ESTABLECEMOS LA CONEXIÓN -->
+
+<?php
+
+    require_once ("conexion.php");
+
+?>
+
+<!-- RECUPERAMOS LOS DATOS -->
+
+<?php
+
+    $instruccion = "SELECT persona.dni, apellido, nombre, fecha_nac, sexo, actuacion, domicilio_persona " .
+                    "FROM persona " .
+                    "WHERE persona.dni = " . $_POST["id_persona"] . ";";
+
+    //echo $instruccion;
+
+    $resultado = mysqli_query($conexion, $instruccion);
+
+    $persona = mysqli_fetch_assoc($resultado);
+
+?>
+
 <!DOCTYPE html>
 
 <html lang="es">
@@ -135,15 +159,113 @@
 
             }
 
+            <?php
+
+                if ($persona["actuacion"] == 1 || ( $persona["actuacion"] == 0 && isset($_SESSION["nombre"]) )) {
+
+            ?>            
+
+            function mostrar_ventana () {
+
+                document.getElementById("fondo_fantasma").style.display = "flex";
+
+            }
+
+            function cerrar_ventana() {
+                
+                document.getElementById("fondo_fantasma").style.display = "none";
+
+            }
+
+            <?php
+            
+                }
+
+            ?>            
+
+            <?php
+
+                $disponible = false;
+
+                if ($persona["actuacion"] == 0 && isset($_SESSION["nombre"]) ) {
+
+                    $disponible = true;
+
+            ?>            
+
+            function visible() {
+
+                switch (document.getElementById("menu_constancia").value) {
+
+                    case "1" :
+                            document.getElementById("datos_asistencia").style.visibility = "hidden";
+                            document.getElementById("boton_borrar").style.display = "none";
+                            break;
+                    case "2" :
+                            document.getElementById("datos_asistencia").style.visibility = "visible";
+                            document.getElementById("boton_borrar").style.display = "inline";
+                            break;
+
+                }
+                
+            }
+
+            function borrar_campos() {
+
+                document.getElementById("fecha_asistencia").value = "";
+                document.getElementById("inicio_asistencia").value = "";
+                document.getElementById("fin_asistencia").value = "";
+                document.getElementById("motivo_asistencia").value = "";
+                
+            }            
+
+            <?php
+            
+                }
+
+            ?>
+
+            <?php
+
+                if ($persona["actuacion"] == 1 || ( $persona["actuacion"] == 0 && isset($_SESSION["nombre"]) )) {
+
+            ?>
+
             function emitir_constancia () {
 
-                if (confirm("Confirma la emisión de la constancia?")) {
+                    switch (document.getElementById("menu_constancia").value) {
+
+                        case "1" :
+                                destino = <?php echo($persona["actuacion"]?"'constancia_estudiante.php';":"'constancia_docente.php';");?>
+                                break;
+                        case "2" :
+                                destino = <?php echo($persona["actuacion"]?"'constancia_estudiante_2.php';":"'constancia_docente_2.php';");?>
+                                break;
+
+                    }
+
+                    if (destino == "constancia_docente_2.php") {
+
+                        document.getElementsByName("fecha")[0].value = document.getElementById("fecha_asistencia").value;
+                        document.getElementsByName("hora_inicio")[0].value = document.getElementById("inicio_asistencia").value;
+                        document.getElementsByName("hora_fin")[0].value = document.getElementById("fin_asistencia").value;
+                        document.getElementsByName("motivo")[0].value = document.getElementById("motivo_asistencia").value;
+
+                    }
+
+                    document.getElementById("formulario_constancia").action = destino;
 
                     document.getElementById("formulario_constancia").submit();
 
-                }
+                    cerrar_ventana();
 
             }
+
+            <?php
+            
+                }
+
+            ?>
 
         </script>
 
@@ -151,35 +273,81 @@
 
     <body>
 
+        <!-- -->
+
+        <?php
+
+            if ($persona["actuacion"] == 1 || ( $persona["actuacion"] == 0 && isset($_SESSION["nombre"]) )) {
+
+        ?>
+        
+        <div id="fondo_fantasma" style="display: none; justify-content: center; align-items: center; height: 100vh; width:100vw; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0,0,0,0.5); position: fixed; font-family: calibri; z-index: 1;">
+
+            <div style="background-color: AntiqueWhite; width: 500px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; border-radius: 15px; padding-bottom: 5px">
+                
+                <h3 style="text-align: center; margin: 0 0 20px 0;">TIPO DE CONSTANCIA</h3>
+
+                <div style="text-align: center;  margin-bottom: 20px;">
+
+                    <select style="width: 200px;" name="tipo_constancia" id="menu_constancia" <?php echo($disponible?'onchange="visible()"':'');?>>
+
+                        <option value="1" selected>
+                            <?php echo($persona["actuacion"]?"ALUMNO REGULAR":"PERTENECE");?>
+                        </option>
+
+                        <option value="2">
+                            <?php echo($persona["actuacion"]?"MATRICULADO":"CONCURRIÓ");?>
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div id="datos_asistencia" style="display: flex; flex-direction: column; justify-content: center; gap: 20px; margin-bottom: 20px; visibility: hidden;">
+
+                    <div style="display: flex; flex-direction: row; justify-content: center; gap: 20px;">
+
+                        <input id="fecha_asistencia" type="date">
+
+                        <input id="inicio_asistencia" type="time">
+
+                        <input id="fin_asistencia" type="time">
+
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; justify-content: center;">
+
+                        <input type="text" id="motivo_asistencia" maxlength="300" style="width: 300px;">
+
+                    </div>
+
+                </div>
+
+                <div style="display: flex; flex-direction: row; justify-content: center; gap: 20px;">
+
+                    <button style="width: 100px;" onclick="cerrar_ventana();">CANCELAR</button>
+                    <button id="boton_borrar" style="width: 100px; display: none;" onclick="borrar_campos();">BORRAR</button>
+                    <button style="width: 100px;" onclick="emitir_constancia();">EMITIR</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <?php
+        
+            }
+
+        ?>
+        
+        <!-- -->
+
         <?php
 
             require_once "cabecera.php";
 
             imprimir_cabecera(2);
-
-        ?>
-
-        <!-- ESTABLECEMOS LA CONEXIÓN -->
-
-        <?php
-
-            require_once ("conexion.php");
-
-        ?>
-
-        <!-- RECUPERAMOS LOS DATOS -->
-
-        <?php
-
-            $instruccion = "SELECT persona.dni, apellido, nombre, fecha_nac, sexo, actuacion, domicilio_persona " .
-                            "FROM persona " .
-                            "WHERE persona.dni = " . $_POST["id_persona"] . ";";
-
-            //echo $instruccion;
-
-            $resultado = mysqli_query($conexion, $instruccion);
-
-            $persona = mysqli_fetch_assoc($resultado);
 
         ?>
 
@@ -352,38 +520,116 @@
 
             ?>
 
-                <div id="ficha_estudiante">
+            <div id="ficha_estudiante">
 
-                    <div class="fila">
-                        <div class="etiqueta">ALLEGADOS</div>
-                        <div class="valor">
-                            
-                            <?php
+                <div class="fila">
+                    <div class="etiqueta">ALLEGADOS</div>
+                    <div class="valor">
+                        
+                        <?php
 
-                                $primero = true;
+                            $primero = true;
 
-                                while ($estudiante) {
+                            while ($estudiante) {
 
-                                    if ($primero == false) {
-                                        
-                                        echo("<br>");
+                                if ($primero == false) {
+                                    
+                                    echo("<br>");
 
-                                    }                                
+                                }                                
 
-                                    echo($estudiante["parentezco"] . ": ". $estudiante["nombre_pariente"]);
+                                echo($estudiante["parentezco"] . ": ". $estudiante["nombre_pariente"]);
 
-                                    $estudiante = mysqli_fetch_assoc($resultado);
+                                $estudiante = mysqli_fetch_assoc($resultado);
 
-                                    $primero = false;
+                                $primero = false;
+
+                            }
+                    
+                        ?>
+
+                    </div>
+                </div>
+
+                <?php
+
+                    $instruccion = "SELECT * " .
+                                    "FROM estudiante_curso " .
+                                    "WHERE dni = " . $_POST["id_persona"] . " ";
+                                    "ORDER BY anio, curso;";
+
+                    //echo $instruccion;
+
+                    $resultado = mysqli_query($conexion, $instruccion);
+
+                    $registro = mysqli_fetch_assoc($resultado);
+
+                ?>
+
+                <div class="fila">
+                    <div class="etiqueta">DIVISIONES</div>
+                    <div class="valor">
+                        
+                        <?php
+
+                            $primero = true;
+
+                            $cont = 0;
+
+                            $renglon = [];
+
+                            while ($registro) {
+
+                                if ($primero) {
+
+                                    $cont++;
+
+                                    $renglon[$cont . "_ANIO"] = $registro["ANIO"];
+                                    $renglon[$cont . "_CURSO"] = $registro["CURSO"];
+
+                                } else {
+
+                                    if ($registro["ANIO"] == $registro_anterior["ANIO"]) {
+
+                                        $renglon[$cont . "_CURSO"] = $renglon[$cont . "_CURSO"] . " - " . $registro["CURSO"];
+
+                                    } else {
+
+                                        $cont++;
+
+                                        $renglon[$cont . "_ANIO"] = $registro["ANIO"];
+                                        $renglon[$cont . "_CURSO"] = $registro["CURSO"];
+
+                                    }
 
                                 }
-                        
-                            ?>
 
-                        </div>
-                    </div>
+                                $registro_anterior = $registro;
+
+                                $registro = mysqli_fetch_assoc($resultado);
+
+                                $primero = false;
+
+                            }
+
+                            for ($i = 1; $i <= $cont; $i++) {
+
+                                echo($renglon[$i . "_ANIO"] . ": " . $renglon[$i . "_CURSO"]);
+                                
+                                if ($i < $cont) {
+
+                                    echo("<br>");
+
+                                }
+
+                            }                                
                     
+                        ?>
+
+                    </div>
                 </div>
+                
+            </div>
 
             <?php
 
@@ -401,24 +647,24 @@
 
             ?>
 
-                <div id="ficha_docente">
+            <div id="ficha_docente">
 
-                    <div class="fila">
-                        <div class="etiqueta">LEGAJO</div>
-                        <div class="valor"><?php echo($docente["legajo"]); ?></div>
-                    </div>
+                <div class="fila">
+                    <div class="etiqueta">LEGAJO</div>
+                    <div class="valor"><?php echo($docente["legajo"]); ?></div>
+                </div>
 
-                    <div class="fila">
-                        <div class="etiqueta">EXPEDIENTE</div>
-                        <div class="valor"><?php echo($docente["expediente_numero"] . "/" . $docente["expediente_anio"]);  ?></div>
-                    </div>
+                <div class="fila">
+                    <div class="etiqueta">EXPEDIENTE</div>
+                    <div class="valor"><?php echo($docente["expediente_numero"] . "/" . $docente["expediente_anio"]);  ?></div>
+                </div>
 
-                    <div class="fila">
-                        <div class="etiqueta">TÍTULO/S</div>
-                        <div class="valor"><?php echo($docente["titulo"]); ?></div>
-                    </div>
-                    
-                </div>            
+                <div class="fila">
+                    <div class="etiqueta">TÍTULO/S</div>
+                    <div class="valor"><?php echo($docente["titulo"]); ?></div>
+                </div>
+                
+            </div>            
 
             <?php
 
@@ -426,9 +672,15 @@
 
             ?>
 
+            <?php
+
+                if ($persona["actuacion"] == 1 || ( $persona["actuacion"] == 0 && isset($_SESSION["nombre"]) )) {
+
+            ?>            
+
             <div id="botones">
 
-                <form id="formulario_constancia" action="<?php echo($persona["actuacion"]?"constancia_estudiante.php":"constancia_docente.php");?>" method="post" target="_blank">
+                <form id="formulario_constancia" action="" method="post" target="_blank">
 
                     <input type="hidden" name="apellido_nombres" value="<?php echo($persona["apellido"] . ", " . $persona["nombre"]);?>">
 
@@ -436,23 +688,25 @@
 
                     <input type="hidden" name="sexo" value="<?php echo($persona["sexo"]);?>">
 
-                    <?php
+                    <input type="hidden" name="fecha" value="">
 
-                        if ($persona["actuacion"] == 1 || ( $persona["actuacion"] == 0 && isset($_SESSION["nombre"]) )) {
+                    <input type="hidden" name="hora_inicio" value="">
 
-                    ?>
+                    <input type="hidden" name="hora_fin" value="">
 
-                            <input type="button" value="EMITIR CONSTANCIA" style="height: 30px;" onclick="emitir_constancia();">
+                    <input type="hidden" name="motivo" value="">
 
-                    <?php
-
-                        }
-                    
-                    ?>
+                    <input type="button" value="EMITIR CONSTANCIA" style="height: 30px;" onclick="mostrar_ventana();">
 
                 </form>
 
             </div>
+
+            <?php
+
+                }
+            
+            ?>            
 
             <!-- CERRAMOS LA CONEXIÓN -->
 

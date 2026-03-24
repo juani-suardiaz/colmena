@@ -42,6 +42,8 @@
     $parrafo_2 = "      A solicitud " . $solicitante . " y al solo efecto de ser presentada ante las autoridades que lo requieran, se extiende la presente constancia, en la ciudad de Bahía Blanca, el día " . date("d-m-Y") . ".";
     $pdf->MultiCell(0,5,utf8_decode($parrafo_2),0,"J");
 
+    $pdf->Image('imagenes/firma_secretaria.png',$pdf->GetPageWidth() / 1.7,$pdf->gety(),60,0);
+
     $pdf->Output();
 
 ?>

@@ -612,17 +612,21 @@
 
                             }
 
-                            for ($i = 1; $i <= $cont; $i++) {
+                            if ($cont > 0) {
 
-                                echo($renglon[$i . "_ANIO"] . ": " . $renglon[$i . "_CURSO"]);
-                                
-                                if ($i < $cont) {
+                                for ($i = 1; $i <= $cont; $i++) {
 
-                                    echo("<br>");
+                                    echo($renglon[$i . "_ANIO"] . ": " . $renglon[$i . "_CURSO"]);
+                                    
+                                    if ($i < $cont) {
 
-                                }
+                                        echo("<br>");
 
-                            }                                
+                                    }
+
+                                }                            
+
+                            }
                     
                         ?>
 

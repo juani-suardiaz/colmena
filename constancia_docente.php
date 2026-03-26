@@ -34,7 +34,7 @@
 
     $pdf->SetFont('Arial','',12);
     
-    $parrafo_1 = "      La Escuela de Ciclo Básico Común, dependiente de la Universiad Nacional del Sur, hace constar que " . $articulo . " Prof. " . $_POST["apellido_nombres"] . " (DNI: ". $_POST["dni"] .") pertenece al personal docente de esta Institución.";
+    $parrafo_1 = "      La Escuela de Ciclo Básico Común, dependiente de la Universidad Nacional del Sur, hace constar que " . $articulo . " Prof. " . $_POST["apellido_nombres"] . " (DNI: ". $_POST["dni"] .") pertenece al personal docente de esta Institución.";
     $pdf->MultiCell(0,5,utf8_decode($parrafo_1),0,"J");
 
     $pdf->Ln(5);

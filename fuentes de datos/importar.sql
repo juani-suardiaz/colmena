@@ -65,6 +65,7 @@ LINES TERMINATED BY '\r\n';
 DELETE FROM persona WHERE actuacion = 1;
 TRUNCATE TABLE estudiante_curso;
 TRUNCATE TABLE estudiante_allegados;
+TRUNCATE TABLE notas_finales;
 TRUNCATE TABLE estudiante;
 
 -- tabla: persona
@@ -98,6 +99,15 @@ LINES TERMINATED BY '\r\n';
 
 LOAD DATA INFILE 'C:/xampp/htdocs/colmena/fuentes de datos/estudiantes/colmena_estudiante_allegados.csv'
 REPLACE INTO TABLE estudiante_allegados
+CHARACTER SET latin1
+FIELDS TERMINATED BY ';'
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
+-- tabla: notas_finales
+
+LOAD DATA INFILE 'C:/xampp/htdocs/colmena/fuentes de datos/analiticos/colmena_notas_finales.csv'
+REPLACE INTO TABLE notas_finales
 CHARACTER SET latin1
 FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY '"'

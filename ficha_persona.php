@@ -217,7 +217,7 @@
                 document.getElementById("fin_asistencia").value = "";
                 document.getElementById("motivo_asistencia").value = "";
                 
-            }            
+            }
 
             <?php
             
@@ -233,34 +233,102 @@
 
             function emitir_constancia () {
 
-                    switch (document.getElementById("menu_constancia").value) {
+                switch (document.getElementById("menu_constancia").value) {
 
-                        case "1" :
-                                destino = <?php echo($persona["actuacion"]?"'constancia_estudiante.php';":"'constancia_docente.php';");?>
-                                break;
-                        case "2" :
-                                destino = <?php echo($persona["actuacion"]?"'constancia_estudiante_2.php';":"'constancia_docente_2.php';");?>
-                                break;
+                    case "1" :
+                            destino = <?php echo($persona["actuacion"]?"'constancia_estudiante.php';":"'constancia_docente.php';");?>
+                            break;
+                    case "2" :
+                            destino = <?php echo($persona["actuacion"]?"'constancia_estudiante_2.php';":"'constancia_docente_2.php';");?>
+                            break;
 
-                    }
+                }
 
-                    if (destino == "constancia_docente_2.php") {
+                if (destino == "constancia_docente_2.php") {
 
-                        document.getElementsByName("fecha")[0].value = document.getElementById("fecha_asistencia").value;
-                        document.getElementsByName("hora_inicio")[0].value = document.getElementById("inicio_asistencia").value;
-                        document.getElementsByName("hora_fin")[0].value = document.getElementById("fin_asistencia").value;
-                        document.getElementsByName("motivo")[0].value = document.getElementById("motivo_asistencia").value;
+                    document.getElementsByName("fecha")[0].value = document.getElementById("fecha_asistencia").value;
+                    document.getElementsByName("hora_inicio")[0].value = document.getElementById("inicio_asistencia").value;
+                    document.getElementsByName("hora_fin")[0].value = document.getElementById("fin_asistencia").value;
+                    document.getElementsByName("motivo")[0].value = document.getElementById("motivo_asistencia").value;
 
-                    }
+                }
 
-                    document.getElementById("formulario_constancia").action = destino;
+                document.getElementById("formulario_constancia").action = destino;
 
-                    document.getElementById("formulario_constancia").submit();
+                document.getElementById("formulario_constancia").submit();
 
-                    cerrar_ventana();
+                cerrar_ventana();
 
             }
 
+            <?php
+            
+                }
+
+            ?>
+
+            //------ RUTINAS PARA EL ANALÍTICO
+
+            <?php
+
+                if ($persona["actuacion"] == 1 && isset($_SESSION["nombre"]) ) {
+
+            ?>
+
+            function mostrar_ventana_2 () {
+
+                document.getElementById("fondo_fantasma_2").style.display = "flex";
+
+            }
+
+            function cerrar_ventana_2() {
+                
+                document.getElementById("fondo_fantasma_2").style.display = "none";
+
+            }
+
+            function borrar_campos_2() {
+
+                document.getElementById("lugar_nacimiento").value = "";
+                document.getElementById("escuela_procedencia").value = "";
+                document.getElementById("escuela_destino").value = "";
+                document.getElementById("fecha_inicio").value = "";
+                document.getElementById("fecha_fin").value = "";
+                document.getElementById("fecha_presentacion").value = "";
+                
+            }            
+
+            function emitir_analitico () {
+
+                if (document.getElementById("fecha_inicio").value == "") {
+
+                    alert("Debe especificar una fecha de inicio.");
+
+                } else {
+
+                    if (document.getElementById("fecha_fin").value == "") {
+
+                        alert("Debe especificar una fecha de finalización.");
+
+                    } else {
+
+                        document.getElementsByName("lugar_nacimiento")[0].value = document.getElementById("lugar_nacimiento").value;
+                        document.getElementsByName("escuela_procedencia")[0].value = document.getElementById("escuela_procedencia").value;
+                        document.getElementsByName("escuela_destino")[0].value = document.getElementById("escuela_destino").value;
+                        document.getElementsByName("fecha_inicio")[0].value = document.getElementById("fecha_inicio").value;
+                        document.getElementsByName("fecha_fin")[0].value = document.getElementById("fecha_fin").value;
+                        document.getElementsByName("fecha_presentacion")[0].value = document.getElementById("fecha_presentacion").value;
+
+                        document.getElementById("formulario_analitico").submit();
+
+                        cerrar_ventana_2();                            
+
+                    }
+
+                }
+
+            }
+            
             <?php
             
                 }
@@ -273,7 +341,7 @@
 
     <body>
 
-        <!-- -->
+        <!-- FONDO FANTASMA -->
 
         <?php
 
@@ -341,6 +409,62 @@
 
         ?>
         
+        <!-- -->
+
+        <!-- FONDO FANTASMA 2 -->
+
+        <?php
+
+            if ($persona["actuacion"] == 1 && isset($_SESSION["nombre"]) ) {
+
+        ?>
+
+        <div id="fondo_fantasma_2" style="display: none; justify-content: center; align-items: center; height: 100vh; width:100vw; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0,0,0,0.5); position: fixed; font-family: calibri; z-index: 1;">
+
+            <div style="background-color: AntiqueWhite; width: 700px; min-height: 300px; display: flex; flex-direction: column; justify-content: center; border-radius: 15px; padding-bottom: 5px">
+
+                <h3 style="text-align: center; margin: 0 0 20px 0;">DATOS PARA EL ANALÍTICO</h3>
+
+                <div style="display: flex; flex-direction: column; justify-content: center; gap: 10px; margin:0 10px 20px 10px;">
+
+                    <label for="lugar_nacimiento" style="display:block;">LUGAR DE NACIMIENTO:</label>
+                    
+                    <input id="lugar_nacimiento" type="text" maxlength="250" style="display:block;">
+
+                    <label for="escuela_procedencia" style="display:block;">ESCUELA DE PROCEDENCIA:</label>
+                    
+                    <input id="escuela_procedencia" type="text" maxlength="250" style="display:block;">
+
+                    <label for="escuela_destino" style="display:block;">ESCUELA DESTINO:</label>
+                    
+                    <input id="escuela_destino" type="text" maxlength="250" style="display:block;">                    
+                    
+                    <label style="display:block;">FECHA INICIO: <input id="fecha_inicio" type="date"></label>
+
+                    <label style="display:block;">FECHA FIN: <input id="fecha_fin" type="date"></label>
+
+                    <label style="display:block;">FECHA PRESENTACIÓN: <input id="fecha_presentacion" type="date"></label>
+
+                </div>
+            
+                <div style="display: flex; flex-direction: row; justify-content: center; gap: 20px;">
+
+                    <button style="width: 100px;" onclick="cerrar_ventana_2();">CANCELAR</button>
+                    <button style="width: 100px;" onclick="borrar_campos_2();">BORRAR</button>
+                    <button style="width: 100px;" onclick="emitir_analitico();">EMITIR</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <?php 
+        
+            }
+
+        ?>
+
         <!-- -->
 
         <?php
@@ -555,7 +679,7 @@
 
                     $instruccion = "SELECT * " .
                                     "FROM estudiante_curso " .
-                                    "WHERE dni = " . $_POST["id_persona"] . " ";
+                                    "WHERE dni = " . $_POST["id_persona"] . " " .
                                     "ORDER BY anio, curso;";
 
                     //echo $instruccion;
@@ -684,7 +808,7 @@
 
             <div id="botones">
 
-                <form id="formulario_constancia" action="" method="post" target="_blank">
+                <form id="formulario_constancia" style="display:inline-block;" action="" method="post" target="_blank">
 
                     <input type="hidden" name="apellido_nombres" value="<?php echo($persona["apellido"] . ", " . $persona["nombre"]);?>">
 
@@ -703,6 +827,38 @@
                     <input type="button" value="EMITIR CONSTANCIA" style="height: 30px;" onclick="mostrar_ventana();">
 
                 </form>
+
+                <?php
+
+                    if ($persona["actuacion"] == 1 && isset($_SESSION["nombre"])) {
+                
+                ?>
+                
+                <form id="formulario_analitico" style="display:inline-block;" action="analitico.php" method="post" target="_blank">
+                    
+                    <input type="hidden" name="dni_2" value="<?php echo($persona["dni"]);?>">
+
+                    <input type="hidden" name="lugar_nacimiento" value="">
+
+                    <input type="hidden" name="escuela_procedencia" value="">
+
+                    <input type="hidden" name="escuela_destino" value="">
+
+                    <input type="hidden" name="fecha_inicio" value="">
+
+                    <input type="hidden" name="fecha_fin" value="">
+
+                    <input type="hidden" name="fecha_presentacion" value="">
+
+                    <input type="button" value="EMITIR ANALÍTICO" style="height: 30px;" onclick="mostrar_ventana_2();">
+
+                </form>
+
+                <?php
+
+                    }
+                
+                ?>
 
             </div>
 

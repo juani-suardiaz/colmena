@@ -26,7 +26,7 @@
 
     } else {
 
-        $texto_acumulado .= " el día " . date("d-m-Y");
+        $texto_acumulado .= " el día " . date("d-m-Y", strtotime($_POST["fecha"]));
 
     }
 
